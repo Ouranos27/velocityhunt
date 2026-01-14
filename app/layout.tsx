@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Geist_Mono, Geist, Syne } from "next/font/google";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"]
+})
+
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "GitHub Spark Generator - Discover Exploding Repos",
@@ -18,11 +28,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistMono.variable} font-mono antialiased bg-zinc-950 text-zinc-50`}
+        className={ `${geistMono.variable} ${geistSans.variable} ${syne.variable} font-mono antialiased text-zinc-50` }
       >
-        {children}
+        <div className="min-h-screen w-full relative bg-black">
+          {/* X Organizations Black Background with Top Glow */ }
+          <div
+            className="absolute inset-0 z-0"
+            style={ {
+              background: "radial-gradient(ellipse 80% 16% at 50% 0%, rgba(120, 180, 255, 0.25), transparent 70%), #000000",
+            } }
+          />
+
+          {/* Your Content/Components */ }
+          <div className="relative z-10">
+            { children }
+          </div>
+        </div>
       </body>
     </html>
   );

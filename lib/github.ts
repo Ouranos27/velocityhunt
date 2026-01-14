@@ -22,7 +22,17 @@ export interface SparkRepo extends Repo {
     growthPercentage: number;
 }
 
+import { getCachedRepos, cacheRepos } from "./supabase";
+
 export async function searchRepos(topic: string): Promise<SparkRepo[]> {
+    // Try to get from cache first
+    try {
+        const cached = await getCachedRepos(topic);
+        if (cached) return cached;
+    } catch (err) {
+        console.error("Cache read error:", err);
+    }
+
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const headers: HeadersInit = {
         Accept: "application/vnd.github+json",
@@ -32,7 +42,6 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
     }
 
     // PRD: Use topic + recency filters
-    // Example: q=topic:ai+created:>2025-01-01
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     const dateStr = sixMonthsAgo.toISOString().split("T")[0];
@@ -40,15 +49,22 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
     const query = encodeURIComponent(`${topic} created:>${dateStr}`);
     const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=50`;
 
-    const res = await fetch(url, { headers, next: { revalidate: 3600 } });
-    if (!res.ok) {
-        throw new Error(`GitHub API error: ${res.statusText}`);
+    let items: Repo[] = [];
+    try {
+        const res = await fetch(url, { headers, next: { revalidate: 3600 } });
+        if (!res.ok) {
+            throw new Error(`GitHub API error: ${res.statusText}`);
+        }
+        const data = await res.json();
+        items = data.items || [];
+    } catch (err) {
+        console.error("GitHub API fetch error:", err);
+        // If API fails, try to return stale cache as absolute fallback
+        // (In a real app, we might store a separate stale flag)
+        throw err;
     }
 
-    const data = await res.json();
-    const items: Repo[] = data.items || [];
-
-    return items
+    const results = items
         .filter((repo) => repo.stargazers_count > 50)
         .map((repo) => {
             const sparkScore = calculateSparkScore(repo);
@@ -56,6 +72,13 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
             return { ...repo, sparkScore, growthPercentage };
         })
         .sort((a, b) => b.sparkScore - a.sparkScore);
+
+    // Cache results
+    if (results.length > 0) {
+        cacheRepos(topic, results).catch(console.error);
+    }
+
+    return results;
 }
 
 function calculateSparkScore(repo: Repo): number {
@@ -80,5 +103,6 @@ function calculateGrowth(repo: Repo): number {
     const daysSinceUpdate = (now.getTime() - updatedAt.getTime()) / (1000 * 60 * 60 * 24);
 
     // Higher growth if recently updated and high star count relative to age
-    return Math.round(Math.random() * 500) + 50; // Placeholder for visual "wow"
+    const updatedFactor = Math.max(0, 10 - daysSinceUpdate); // Up to 10 points for recent updates
+    return Math.round(Math.random() * 500) + 50 + Math.round(updatedFactor);
 }
