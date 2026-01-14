@@ -24,16 +24,46 @@ export interface SparkRepo extends Repo {
     growthPercentage: number;
 }
 
-import { getCachedRepos, cacheRepos } from "./supabase";
+import { getCachedRepos, cacheRepos, getStaleCachedRepos } from "./supabase";
+import { memoryCache } from "./cache";
 
-export async function searchRepos(topic: string): Promise<SparkRepo[]> {
-    // Try to get from cache first
+export async function searchRepos(topic: string, useStale = false): Promise<SparkRepo[]> {
+    // 1. Check in-memory cache first (fastest)
+    const memCached = memoryCache.get(topic);
+    if (memCached) {
+        console.log("Cache hit: memory");
+        return memCached;
+    }
+
+    // 2. Check database cache (fast)
     try {
-        const cached = await getCachedRepos(topic);
-        if (cached) return cached;
+        const dbCached = await getCachedRepos(topic);
+        if (dbCached) {
+            console.log("Cache hit: database");
+            // Store in memory for next time
+            memoryCache.set(topic, dbCached);
+            return dbCached;
+        }
+
+        // 3. If allowed, return stale cache while revalidating in background
+        if (useStale) {
+            const staleCache = await getStaleCachedRepos(topic);
+            if (staleCache) {
+                console.log("Cache hit: stale (revalidating in background)");
+                // Revalidate in background (fire and forget)
+                fetchAndCacheRepos(topic).catch(console.error);
+                return staleCache;
+            }
+        }
     } catch (err) {
         console.error("Cache read error:", err);
     }
+
+    // 4. Fetch fresh data
+    return fetchAndCacheRepos(topic);
+}
+
+async function fetchAndCacheRepos(topic: string): Promise<SparkRepo[]> {
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const headers: HeadersInit = {
@@ -49,11 +79,11 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
     const dateStr = sixMonthsAgo.toISOString().split("T")[0];
 
     const query = encodeURIComponent(`${topic} created:>${dateStr}`);
-    const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=50`;
+    const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=30`;
 
     let items: Repo[] = [];
     try {
-        const res = await fetch(url, { headers, next: { revalidate: 3600 } });
+        const res = await fetch(url, { headers, cache: "no-store" });
         if (!res.ok) {
             throw new Error(`GitHub API error: ${res.statusText}`);
         }
@@ -61,8 +91,6 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
         items = data.items || [];
     } catch (err) {
         console.error("GitHub API fetch error:", err);
-        // If API fails, try to return stale cache as absolute fallback
-        // (In a real app, we might store a separate stale flag)
         throw err;
     }
 
@@ -75,8 +103,9 @@ export async function searchRepos(topic: string): Promise<SparkRepo[]> {
         })
         .sort((a, b) => b.sparkScore - a.sparkScore);
 
-    // Cache results
+    // Cache results in both memory and database
     if (results.length > 0) {
+        memoryCache.set(topic, results);
         cacheRepos(topic, results).catch(console.error);
     }
 

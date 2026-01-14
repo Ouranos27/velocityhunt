@@ -28,7 +28,7 @@ export function BatchShareButton({ repos, topic }: BatchShareButtonProps) {
     return (
         <Button
             onClick={ shareOnX }
-            className="gap-2 rounded-xl bg-sky-500 font-bold text-white hover:bg-sky-600 active:scale-95 cursor-pointer"
+            className="gap-2 rounded-xl bg-sky-500 font-bold text-white hover:bg-sky-600 active:scale-95 w-full sm:w-auto cursor-pointer"
         >
             <svg
                 viewBox="0 0 24 24"

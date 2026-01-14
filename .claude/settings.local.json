@@ -3,7 +3,8 @@
     "allow": [
       "Bash(dir:*)",
       "Bash(bun add:*)",
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "Bash(bunx drizzle-kit:*)"
     ]
   }
 }
