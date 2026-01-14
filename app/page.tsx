@@ -188,7 +188,7 @@ export default function Home() {
             show: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.015
+                staggerChildren: 0
               }
             }
           } }

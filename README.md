@@ -2,6 +2,42 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Setup
+
+1. Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+
+```bash
+cp .env.example .env.local
+```
+
+2. Update the following variables in `.env.local`:
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`: Your Supabase anon key
+   - `DATABASE_URL`: Your Supabase database connection string (for Drizzle ORM)
+   - `GITHUB_TOKEN`: (Optional) GitHub personal access token for higher API rate limits
+
+### Database Setup
+
+This project uses [Drizzle ORM](https://orm.drizzle.team/) for database interactions with Supabase PostgreSQL.
+
+#### Available Database Commands
+
+```bash
+# Generate migration files from schema
+bun run db:generate
+
+# Apply migrations to database
+bun run db:migrate
+
+# Push schema changes directly to database (development)
+bun run db:push
+
+# Open Drizzle Studio (database GUI)
+bun run db:studio
+```
+
+### Run the Development Server
+
 First, run the development server:
 
 ```bash

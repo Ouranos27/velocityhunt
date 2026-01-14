@@ -1,4 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { eq } from "drizzle-orm";
+import { db, repoCache } from "./db";
 import { SparkRepo } from "./github";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -8,46 +10,51 @@ const isConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 export const supabase = isConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 export async function getCachedRepos(topic: string) {
-    if (!supabase) return null;
+    if (!db) return null;
 
     try {
-        const { data, error } = await supabase
-            .from("repo_cache")
-            .select("*")
-            .eq("query", topic)
-            .single();
+        const result = await db
+            .select()
+            .from(repoCache)
+            .where(eq(repoCache.query, topic))
+            .limit(1);
 
-        if (error || !data) return null;
+        if (!result || result.length === 0) return null;
+
+        const data = result[0];
 
         // Check if cache is fresh (e.g., < 6 hours)
-        const updatedAt = new Date(data.updated_at);
+        const updatedAt = new Date(data.updatedAt);
         const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
 
         if (updatedAt < sixHoursAgo) return null;
 
         return data.results;
     } catch (err) {
-        console.error("Supabase getCachedRepos error:", err);
+        console.error("Drizzle getCachedRepos error:", err);
         return null;
     }
 }
 
 export async function cacheRepos(topic: string, results: SparkRepo[]) {
-    if (!supabase) return;
+    if (!db) return;
 
     try {
-        const { error } = await supabase
-            .from("repo_cache")
-            .upsert({
+        await db
+            .insert(repoCache)
+            .values({
                 query: topic,
                 results,
-                updated_at: new Date().toISOString(),
+                updatedAt: new Date(),
+            })
+            .onConflictDoUpdate({
+                target: repoCache.query,
+                set: {
+                    results,
+                    updatedAt: new Date(),
+                },
             });
-
-        if (error) {
-            console.error("Error caching repos:", error);
-        }
     } catch (err) {
-        console.error("Supabase cacheRepos error:", err);
+        console.error("Drizzle cacheRepos error:", err);
     }
 }
