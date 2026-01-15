@@ -57,6 +57,28 @@ export default function RootLayout({
       <body
         className={ `${geistMono.variable} ${geistSans.variable} ${syne.variable} font-mono antialiased text-zinc-50` }
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ {
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "VelocityHunt",
+              "operatingSystem": "Web",
+              "applicationCategory": "DeveloperApplication",
+              "description": "Discover exploding GitHub repositories before they go viral.",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "author": {
+                "@type": "Person",
+                "name": "Philippe"
+              }
+            })
+          } }
+        />
         <div className="min-h-screen w-full relative bg-black">
           {/* X Organizations Black Background with Top Glow */ }
           <div

@@ -21,10 +21,14 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   return {
     title: `${query} - Trending GitHub Repos | VelocityHunt`,
     description: `Discover the hottest ${query} repositories on GitHub. Real-time velocity tracking of exploding repos before they go viral.`,
+    alternates: {
+      canonical: `/?q=${encodeURIComponent(query)}`,
+    },
     openGraph: {
       title: `${query} - Trending GitHub Repos`,
       description: `Discover the hottest ${query} repositories on GitHub`,
       type: "website",
+      url: `https://velocityhunt.vercel.app/?q=${encodeURIComponent(query)}`,
     },
   };
 }
@@ -74,7 +78,7 @@ export default async function Home({ searchParams }: PageProps) {
       </section>
 
       {/* Trending Topics - Show only when no search query */ }
-      {!hasQuery && <TrendingTopics />}
+      { !hasQuery && <TrendingTopics /> }
 
       {/* Results Section with Suspense for Streaming */ }
       <Suspense fallback={ <RepoGridSkeleton /> }>
