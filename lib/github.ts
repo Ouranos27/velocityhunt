@@ -4,7 +4,7 @@ import { Repo, SparkRepo, calculateSparkScore, calculateGrowth } from "./scoring
 import { getCachedRepos, cacheRepos, getStaleCachedRepos } from "./supabase";
 import { memoryCache } from "./cache";
 
-export { type Repo, type SparkRepo };
+export { type Repo, type SparkRepo, calculateSparkScore, calculateGrowth };
 
 export async function searchRepos(topic: string, useStale = false): Promise<SparkRepo[]> {
     // 1. Check in-memory cache first (fastest)
