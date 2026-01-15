@@ -35,7 +35,7 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-16 px-6 py-20">
-      {/* Hero Section */}
+      {/* Hero Section */ }
       <section className="flex flex-col items-center gap-8 text-center">
         <div className="opacity-0 animate-in fade-in duration-500">
           <Badge variant="outline" className="border-zinc-800 bg-zinc-900/50 px-4 py-1.5 text-sm font-medium text-zinc-400 hover:bg-zinc-900/50">
@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: PageProps) {
 
         <div className="flex flex-col gap-4 opacity-0 animate-in fade-in duration-500 delay-100">
           <h1 className="text-5xl font-bold font-syne tracking-tight sm:text-7xl">
-            Find the next <span className="text-spark">Spark</span>
+            Find the next <span className="text-gradient-spark">Spark</span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-zinc-400">
             Discover exploding GitHub repositories before they go viral.
@@ -71,9 +71,9 @@ export default async function Home({ searchParams }: PageProps) {
         <SearchInterface />
       </section>
 
-      {/* Results Section with Suspense for Streaming */}
-      <Suspense fallback={<RepoGridSkeleton />}>
-        <RepoResults query={query} />
+      {/* Results Section with Suspense for Streaming */ }
+      <Suspense fallback={ <RepoGridSkeleton /> }>
+        <RepoResults query={ query } />
       </Suspense>
     </main>
   );
@@ -95,7 +95,7 @@ async function RepoResults({ query }: { query: string }) {
     );
   }
 
-  return <RepoGrid repos={repos} query={query} />;
+  return <RepoGrid repos={ repos } query={ query } />;
 }
 
 // Enable ISR with 1 hour revalidation

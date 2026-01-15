@@ -16,7 +16,7 @@ Via velocityhunt #indiemaker`;
     };
 
     return (
-        <Card className="glass group relative flex flex-col h-full border-zinc-800 transition-all hover:border-spark/50 hover:bg-white/[0.05]">
+        <Card className="glass group relative flex flex-col h-full border-zinc-800 transition-all hover:border-spark/50 hover:bg-white/[0.05] hover:shadow-[0_0_30px_-10px_rgba(251,191,36,0.15)]">
             <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-4">
                 <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ Via velocityhunt #indiemaker`;
                     </div>
                     <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-800">
                         <div
-                            className="h-full spark-gradient transition-all duration-500"
+                            className={ `h-full spark-gradient transition-all duration-500 ${repo.sparkScore > 100 ? "animate-pulse-glow" : ""}` }
                             style={ { width: `${Math.min(100, (repo.sparkScore / 50) * 100)}%` } }
                         />
                     </div>

@@ -1,5 +1,5 @@
 import { pgTable, text, jsonb, timestamp, index } from "drizzle-orm/pg-core";
-import type { SparkRepo } from "../github";
+import type { SparkRepo } from "../scoring";
 
 export const repoCache = pgTable("repo_cache", {
   query: text("query").primaryKey(),

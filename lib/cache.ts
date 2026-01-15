@@ -1,4 +1,4 @@
-import { SparkRepo } from "./github";
+import { SparkRepo } from "./scoring";
 
 interface CacheEntry {
   data: SparkRepo[];
