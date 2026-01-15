@@ -70,7 +70,7 @@ export default async function Home({ searchParams }: PageProps) {
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-zinc-400">
             Discover exploding GitHub repositories before they go viral.
-            Real-time velocity tracking and ready-to-share insights.
+            We track <span className="text-zinc-300 font-medium">velocity</span> — how fast repos are gaining stars — not just popularity.
           </p>
         </div>
 

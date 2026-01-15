@@ -46,7 +46,10 @@ Via velocityhunt #indiemaker`;
                     </div>
                     <p className="text-xs text-zinc-500">by { repo.owner.login }</p>
                 </div>
-                <Badge className="bg-spark/10 text-spark hover:bg-spark/20 border-none flex items-center gap-1.5 px-2.5 py-1">
+                <Badge
+                    className="bg-spark/10 text-spark hover:bg-spark/20 border-none flex items-center gap-1.5 px-2.5 py-1 cursor-help"
+                    title="Spark Score = (Stars × 2 + Forks) ÷ Days Old. Higher = faster growth rate"
+                >
                     <Flame size={ 14 } className="fill-spark" />
                     <span className="font-bold">{ repo.sparkScore }</span>
                 </Badge>
@@ -73,7 +76,10 @@ Via velocityhunt #indiemaker`;
                 </div>
 
                 <div className="space-y-1.5 mt-auto">
-                    <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-zinc-500 font-bold">
+                    <div
+                        className="flex items-center justify-between text-[10px] uppercase tracking-wider text-zinc-500 font-bold cursor-help"
+                        title={ `${repo.growthPercentage}% = ~${Math.round(repo.growthPercentage / 100)} stars/day average` }
+                    >
                         <span>Spark Velocity</span>
                         <span className="text-spark">↑ { repo.growthPercentage }%</span>
                     </div>

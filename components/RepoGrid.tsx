@@ -32,7 +32,7 @@ export function RepoGrid({ repos, query }: RepoGridProps) {
             <Flame className="text-spark fill-spark" size={ 20 } />
             Sparks found for &quot;{ query }&quot;
           </h2>
-          <p className="text-sm text-zinc-500">{ repos.length } results sorted by velocity</p>
+          <p className="text-sm text-zinc-500">{ repos.length } results • fastest-growing repos first</p>
         </div>
         <div className="w-full sm:w-auto">
           <BatchShareButton repos={ repos } topic={ query } />

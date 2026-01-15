@@ -92,6 +92,24 @@ export function Footer() {
                         </ul>
                     </div>
 
+                    {/* How It Works */ }
+                    <div className="space-y-4 sm:col-span-2 lg:col-span-1">
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
+                            How Scoring Works
+                        </h3>
+                        <div className="space-y-2 text-xs text-zinc-500 leading-relaxed">
+                            <p>
+                                <span className="text-spark font-semibold">Spark Score</span> = (Stars × 2 + Forks) ÷ Days Old × Activity Factor
+                            </p>
+                            <p>
+                                Higher scores mean faster growth. We penalize inactive repos and boost recently updated ones.
+                            </p>
+                            <p>
+                                <span className="text-zinc-400 font-semibold">Velocity %</span> = Stars per day × 100. A repo gaining 5 stars/day shows 500% velocity.
+                            </p>
+                        </div>
+                    </div>
+
                     {/* Connect */ }
                     <div className="space-y-4">
                         <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
