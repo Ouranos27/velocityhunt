@@ -1,72 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VelocityHunt ⚡️
 
-## Getting Started
+> **Discover exploding GitHub repositories before they go viral.**
+> Instant insights, velocity-based ranking, and ready-to-share social posts.
 
-### Environment Setup
+[![Built for VelocityHunt](https://img.shields.io/badge/Built%20for-VelocityHunt-fbbf24?style=for-the-badge&logo=x&logoColor=white)](https://x.com/velocity_hunt)
 
-1. Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+![VelocityHunt Demo](./public/og.png)
 
+## 🚀 Overview
+Most "trending" lists are lagging indicators. By the time a repo hits the front page, you've already missed the opportunity to be an early adopter or contributor.
+
+**VelocityHunt** is built for makers who want to stay ahead of the curve. We don't just look at absolute star counts; we track **Spark Velocity**.
+
+- **Velocity-First**: We prioritize repos gaining momentum *now*, even if they only have 100 stars.
+- **Topic Deep-Dives**: Filter by your specific interests—from "AI Agents" to "Rust Tooling".
+- **Built for Virality**: Find a spark? Share it with your audience in one click with our pre-formatted social drafts.
+
+## ✨ Features
+- **🔥 Trending Topics**: Smart suggestions for high-growth areas when you're looking for inspiration.
+- **⚡️ Spark Score**: A proprietary algorithm `(Stars * 2 + Forks) / Days_Live` with decay factors for inactivity.
+- **🛡️ Resilient Architecture**: 3-layer caching (Memory + Supabase + Stale-while-revalidate) to survive the most intense traffic spikes.
+- **📱 Mobile Optimized**: A premium, responsive UI built for discovery on the go.
+- **🎨 Modern Aesthetics**: Dark mode, glassmorphism, and smooth animations using Framer Motion.
+
+## 🛠 Tech Stack
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS 4 + Framer Motion
+- **Database**: Supabase (Postgres) + Drizzle ORM
+- **Deployment**: Vercel
+
+## 🏁 Getting Started
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/Ouranos27/velocityhunt.git
+cd velocityhunt
+bun install
+```
+
+### 2. Configure Environment
+Copy `.env.example` to `.env.local` and add your credentials:
 ```bash
 cp .env.example .env.local
 ```
+Required variables:
+- `DATABASE_URL`
+- `GITHUB_TOKEN` (Optional, prevents rate limits)
 
-2. Update the following variables in `.env.local`:
-   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
-   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`: Your Supabase anon key
-   - `DATABASE_URL`: Your Supabase database connection string (for Drizzle ORM)
-   - `GITHUB_TOKEN`: (Optional) GitHub personal access token for higher API rate limits
-
-### Database Setup
-
-This project uses [Drizzle ORM](https://orm.drizzle.team/) for database interactions with Supabase PostgreSQL.
-
-#### Available Database Commands
-
+### 3. Run Locally
 ```bash
-# Generate migration files from schema
-bun run db:generate
-
-# Apply migrations to database
-bun run db:migrate
-
-# Push schema changes directly to database (development)
-bun run db:push
-
-# Open Drizzle Studio (database GUI)
-bun run db:studio
-```
-
-### Run the Development Server
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
 ```
+Visit `http://localhost:3000`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📜 License
+MIT © Philippe
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built for the VelocityHunt rapid Challenge*

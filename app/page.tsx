@@ -4,6 +4,7 @@ import { searchRepos } from "@/lib/github";
 import { SearchInterface } from "@/components/SearchInterface";
 import { RepoGrid } from "@/components/RepoGrid";
 import { RepoGridSkeleton } from "@/components/RepoGridSkeleton";
+import { TrendingTopics } from "@/components/TrendingTopics";
 import { Badge } from "@/components/ui/badge";
 
 const DEFAULT_TOPIC = "AI Agents";
@@ -32,6 +33,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const query = params.q || DEFAULT_TOPIC;
+  const hasQuery = params.q !== undefined;
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-16 px-6 py-20">
@@ -70,6 +72,9 @@ export default async function Home({ searchParams }: PageProps) {
 
         <SearchInterface />
       </section>
+
+      {/* Trending Topics - Show only when no search query */ }
+      {!hasQuery && <TrendingTopics />}
 
       {/* Results Section with Suspense for Streaming */ }
       <Suspense fallback={ <RepoGridSkeleton /> }>

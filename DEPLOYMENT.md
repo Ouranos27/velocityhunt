@@ -37,14 +37,7 @@ You need to run the migrations to create the required tables. You have two optio
 
 ## Step 2: Configure Environment Variables
 
-### Get Your Supabase Credentials
-
-1. In your Supabase project dashboard, go to Settings > API
-2. Copy the following values:
-   - Project URL (e.g., `https://your-project.supabase.co`)
-   - Anon/Public Key (this is safe to expose in the browser)
-
-3. In Settings > Database, find your connection string:
+### Create Environment Variables in Vercel
    - Look for "Connection Pooling" (recommended for serverless)
    - Use the "Transaction" mode connection string
    - Format: `postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:5432/postgres`
@@ -55,8 +48,6 @@ You'll need to set these environment variables in Vercel:
 
 | Variable Name | Description | Required |
 |--------------|-------------|----------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL | Yes |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` | Your Supabase anon/public key | Yes |
 | `DATABASE_URL` | Your Supabase connection string (use pooler) | Yes |
 | `GITHUB_TOKEN` | GitHub Personal Access Token (for higher rate limits) | No |
 

@@ -1,8 +1,12 @@
-import { Star, GitFork, Eye, ExternalLink, Flame } from "lucide-react";
+"use client";
+
+import { Star, GitFork, Eye, ExternalLink, Flame, Copy } from "lucide-react";
+import { toast } from "sonner";
 import { SparkRepo } from "@/lib/github";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { XIcon } from "@/components/XIcon";
 
 export function RepoCard({ repo }: { repo: SparkRepo }) {
     const shareText = `Just spotted this 🔥 GitHub spark: ${repo.name} by @${repo.owner.login}
@@ -13,6 +17,19 @@ Via velocityhunt #indiemaker`;
     const shareOnX = () => {
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
         window.open(url, "_blank");
+    };
+
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(shareText);
+            toast.success("Copied to clipboard!", {
+                description: "Share this spark anywhere you like ⚡️"
+            });
+        } catch (err) {
+            toast.error("Failed to copy", {
+                description: "Please try again"
+            });
+        }
     };
 
     return (
@@ -80,24 +97,26 @@ Via velocityhunt #indiemaker`;
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        View Repo <ExternalLink className="ml-1" />
+                        View Repo <ExternalLink className="ml-1" size={ 16 } />
                     </a>
+                </Button>
+                <Button
+                    onClick={ copyToClipboard }
+                    variant="outline"
+                    size="icon"
+                    className="border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 cursor-pointer"
+                    title="Copy to clipboard"
+                >
+                    <Copy size={ 16 } />
                 </Button>
                 <Button
                     onClick={ shareOnX }
                     variant="outline"
                     size="icon"
                     className="border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 cursor-pointer"
+                    title="Share on X"
                 >
-                    <svg
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        aria-label="Share on X"
-                    >
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
+                    <XIcon size={ 16 } />
                 </Button>
             </CardFooter>
         </Card>

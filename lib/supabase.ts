@@ -1,13 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
 import { eq } from "drizzle-orm";
 import { db, repoCache } from "./db";
 import { SparkRepo } from "./scoring";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || "";
-
-const isConfigured = Boolean(supabaseUrl && supabaseAnonKey);
-export const supabase = isConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 export async function getCachedRepos(topic: string) {
     if (!db) return null;

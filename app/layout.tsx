@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Geist, Syne } from "next/font/google";
+import { Toaster } from "sonner";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -20,6 +22,29 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: "GitHub Spark Generator - Discover Exploding Repos",
   description: "Discover exploding GitHub repositories before they go viral — instant insights, velocity-based ranking, and ready-to-share X posts.",
+  openGraph: {
+    title: "VelocityHunt - Discover Exploding GitHub Repos",
+    description: "Find the next Spark ⚡ Real-time velocity tracking of trending repositories before they go viral.",
+    url: "https://velocityhunt.vercel.app",
+    siteName: "VelocityHunt",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "VelocityHunt - Discover exploding GitHub repositories",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VelocityHunt - Discover Exploding GitHub Repos",
+    description: "Find the next Spark ⚡ Real-time velocity tracking of trending repositories.",
+    images: ["/og.png"],
+    creator: "@PipolmPk",
+  },
 };
 
 export default function RootLayout({
@@ -42,10 +67,14 @@ export default function RootLayout({
           />
 
           {/* Your Content/Components */ }
-          <div className="relative z-10">
-            { children }
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <div className="flex-1">
+              { children }
+            </div>
+            <Footer />
           </div>
         </div>
+        <Toaster position="bottom-right" theme="dark" />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { ErrorState } from "@/components/ErrorState";
 
 export default function Error({
   error,
@@ -14,22 +14,19 @@ export default function Error({
     console.error("Application error:", error);
   }, [error]);
 
+  const isRateLimitError = error.message.includes("rate limit") || error.message.includes("403");
+
   return (
-    <div className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-6 px-6 py-40 text-center">
-      <div className="rounded-xl border border-red-900/50 bg-red-950/20 p-8">
-        <h2 className="mb-4 text-2xl font-bold text-red-400">
-          Something went wrong!
-        </h2>
-        <p className="mb-6 text-zinc-400">
-          {error.message || "An unexpected error occurred while loading the page."}
-        </p>
-        <Button
-          onClick={reset}
-          className="bg-spark text-zinc-950 hover:bg-spark/90"
-        >
-          Try again
-        </Button>
-      </div>
-    </div>
+    <main className="mx-auto flex max-w-7xl flex-col gap-16 px-6 py-20">
+      <ErrorState
+        title={isRateLimitError ? "GitHub API Rate Limit Exceeded" : "Something went wrong!"}
+        message={
+          isRateLimitError
+            ? "We've hit GitHub's rate limit. Try adding a GITHUB_TOKEN to your environment variables or wait a few minutes."
+            : error.message || "An unexpected error occurred. Please try again in a moment."
+        }
+        onRetry={reset}
+      />
+    </main>
   );
 }
