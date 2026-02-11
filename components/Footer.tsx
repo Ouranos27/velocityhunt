@@ -1,6 +1,7 @@
-import { Github, Flame } from "lucide-react";
+import { Flame } from "lucide-react";
 import Link from "next/link";
 import { XIcon } from "./XIcon";
+import { GithubIcon } from "./GithubIcon";
 
 export function Footer() {
     return (
@@ -123,7 +124,7 @@ export function Footer() {
                                 className="rounded-lg border border-zinc-800 p-2.5 text-zinc-500 transition-colors hover:border-zinc-700 hover:text-zinc-100"
                                 aria-label="GitHub"
                             >
-                                <Github size={ 20 } />
+                                <GithubIcon size={ 20 } />
                             </a>
                             <a
                                 href="https://x.com/PipolmPk"
@@ -136,14 +137,14 @@ export function Footer() {
                             </a>
                         </div>
                         <p className="text-xs text-zinc-600">
-                            Built in rapid for{ " " }
+                            Built in 48h for{ " " }
                             <a
-                                href="https://x.com/velocity_hunt"
+                                href="https://x.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-spark hover:underline font-bold"
                             >
-                                @velocity_hunt&apos;s VelocityHunt challenge
+                                @&apos;s  challenge
                             </a>
                         </p>
                     </div>
@@ -169,6 +170,7 @@ export function Footer() {
                             rel="noopener noreferrer"
                             className="text-zinc-600 hover:text-zinc-400 transition-colors"
                         >
+                            <GithubIcon className="w-5 h-5" />
                             Powered by GitHub API
                         </a>
                     </div>
