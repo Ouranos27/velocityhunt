@@ -20,7 +20,7 @@ const syne = Syne({
 })
 
 export const metadata: Metadata = {
-  title: "GitHub Spark Generator - Discover Exploding Repos",
+  title: "VelocityHunt - Discover Exploding Repos",
   description: "Discover exploding GitHub repositories before they go viral — instant insights, velocity-based ranking, and ready-to-share X posts.",
   openGraph: {
     title: "VelocityHunt - Discover Exploding GitHub Repos",

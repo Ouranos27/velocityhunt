@@ -57,4 +57,3 @@ Visit `http://localhost:3000`.
 MIT © Philippe
 
 ---
-*Built for the VelocityHunt rapid Challenge*
