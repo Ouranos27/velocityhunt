@@ -136,17 +136,6 @@ export function Footer() {
                                 <XIcon size={ 20 } />
                             </a>
                         </div>
-                        <p className="text-xs text-zinc-600">
-                            Built in 48h for{ " " }
-                            <a
-                                href="https://x.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-spark hover:underline font-bold"
-                            >
-                                @&apos;s  challenge
-                            </a>
-                        </p>
                     </div>
                 </div>
 

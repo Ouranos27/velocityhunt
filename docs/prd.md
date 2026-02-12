@@ -5,7 +5,7 @@
 **Version:** 1.0 (MVP – Final)  
 **Author:** Philippe  
 **Date:** January 15, 2026  
-**Status:** Final (Tibo Maker test submission)
+**Status:** Final
 
 ## 1. Overview
 

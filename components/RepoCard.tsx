@@ -34,17 +34,17 @@ Via velocityhunt #indiemaker`;
 
     return (
         <Card className="glass group relative flex flex-col h-full border-zinc-800 transition-all hover:border-spark/50 hover:bg-white/[0.05] hover:shadow-[0_0_30px_-10px_rgba(251,191,36,0.15)]">
-            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-4">
-                <div className="flex flex-col gap-1.5">
-                    <div className="flex items-center gap-2">
-                        <CardTitle className="text-lg font-bold text-zinc-100 group-hover:text-spark transition-colors">
+            <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-4 flex-wrap gap-2">
+                <div className="flex flex-col gap-1.5 flex-1 min-w-[150px]">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <CardTitle className="text-base sm:text-lg font-bold text-zinc-100 group-hover:text-spark transition-colors">
                             { repo.name }
                         </CardTitle>
-                        <Badge variant="outline" className="bg-zinc-800/50 text-zinc-400 border-zinc-700">
+                        <Badge variant="outline" className="bg-zinc-800/50 text-zinc-400 border-zinc-700 text-[10px] py-0 px-1.5">
                             { repo.language || "Unknown" }
                         </Badge>
                     </div>
-                    <p className="text-xs text-zinc-500">by { repo.owner.login }</p>
+                    <p className="text-[10px] sm:text-xs text-zinc-500">by { repo.owner.login }</p>
                 </div>
                 <Badge
                     className="bg-spark/10 text-spark hover:bg-spark/20 border-none flex items-center gap-1.5 px-2.5 py-1 cursor-help"

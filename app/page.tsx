@@ -65,7 +65,7 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
 
         <div className="flex flex-col gap-4 opacity-0 animate-in fade-in duration-500 delay-100">
-          <h1 className="text-5xl font-bold font-syne tracking-tight sm:text-7xl">
+          <h1 className="text-4xl font-bold font-syne tracking-tight sm:text-7xl">
             Find the next <span className="text-gradient-spark">Spark</span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-zinc-400">

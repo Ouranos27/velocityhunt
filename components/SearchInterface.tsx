@@ -53,12 +53,12 @@ export function SearchInterface() {
           value={ query }
           onChange={ (e) => setQuery(e.target.value) }
           placeholder="Search topic..."
-          className="h-16 w-full rounded-2xl border-zinc-800 bg-zinc-900/50 pl-14 pr-16 sm:pr-32 text-lg text-zinc-100 placeholder:text-zinc-600 focus-visible:ring-spark/50"
+          className="h-14 sm:h-16 w-full rounded-2xl border-zinc-800 bg-zinc-900/50 pl-12 pr-12 sm:pl-14 sm:pr-32 text-base sm:text-lg text-zinc-100 placeholder:text-zinc-600 focus-visible:ring-spark/50"
         />
         <Button
           type="submit"
           disabled={ isPending }
-          className="absolute right-2 h-12 rounded-xl bg-spark px-4 sm:px-6 text-sm font-bold text-zinc-950 hover:bg-spark/90 active:scale-95 disabled:opacity-50"
+          className="absolute right-1.5 h-11 sm:h-13 rounded-xl bg-spark px-3 sm:px-6 text-sm font-bold text-zinc-950 hover:bg-spark/90 active:scale-95 disabled:opacity-50"
         >
           { isPending ? <Loader2 className="animate-spin" size={ 18 } /> : (
             <>
